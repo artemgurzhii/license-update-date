@@ -1,0 +1,46 @@
+{
+  "name": "license-update-date",
+  "version": "0.0.1",
+  "author": {
+    "name": "Artem Gurzhii",
+    "email": "artem.gurzhii@gmail.com",
+    "url": "https://github.com/artemgurzhii"
+  },
+  "description": "Telegram bot, which will notify you each time, when your travis ci build is done",
+  "main": "index.js",
+  "homepage": "https://github.com/artemgurzhii/license-update-date",
+  "scripts": {
+    "lint": "eslint --cache .",
+    "test": "codemod-cli test",
+    "test:coverage": "codemod-cli test --coverage",
+    "update-docs": "codemod-cli update-docs",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
+  },
+  "bin": "./bin/cli.js",
+  "keywords": [
+    "codemod-cli"
+  ],
+  "dependencies": {
+    "@octokit/rest": "^16.30.1",
+    "codemod-cli": "^2.1.0",
+    "execa": "^2.0.4",
+    "github-pull-requests": "^0.4.3",
+    "node-fetch": "^2.6.0",
+    "tmp": "^0.1.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.6",
+    "eslint": "^6.4.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
+    "prettier": "^1.18.2"
+  },
+  "engines": {
+    "node": "8.* || 10.* || >= 12"
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
