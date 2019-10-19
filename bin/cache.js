@@ -14,4 +14,4 @@ function writeProgressFile(json) {
 module.exports = {
   progressFile,
   writeProgressFile,
-}
+};

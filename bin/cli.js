@@ -11,7 +11,6 @@ const {
   clone,
   pushBranch,
   createPR,
-  wasPrClosed,
   checkoutBranch,
 } = require('./git');
 
@@ -53,14 +52,7 @@ async function updateLicense(theirs, updateState) {
   let { name: tmpPath, removeCallback: cleanTmp } = tmp.dirSync();
 
   try {
-    if (await wasPrClosed({ user: userName, repo })) {
-      console.log(`PR for ${userName}/${repo} was closed or merged`);
-      return;
-    }
-
-    if (!(await repoExists(mine))) {
-      await fork(theirs);
-    }
+    await fork(theirs);
 
     updateState({ forked: true });
 

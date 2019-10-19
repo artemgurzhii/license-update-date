@@ -1,6 +1,5 @@
 const Octokit = require('@octokit/rest');
 const path = require('path');
-const getPullRequests = require('github-pull-requests');
 const { run } = require('./shell');
 
 const BRANCH_NAME = 'update-license-date';
@@ -106,27 +105,8 @@ async function createPR({ base, upstream, repo, updateState }) {
   });
 }
 
-const currentPRs = [];
-
-async function wasPrClosed({ user, repo }) {
-  if (currentPRs.length === 0) {
-    const prData = await getPullRequests(user, 'closed', { oAuthToken: GITHUB_TOKEN });
-
-    currentPRs = prData.map(pr => pr.url);
-  }
-
-  for (let i = 0; i < currentPRs.length; i++) {
-    const current = currentPRs[i];
-
-    if (current.includes(user) && current.includes(repo)) return true;
-  }
-
-  return false;
-}
-
 module.exports = {
   fork,
-  wasPrClosed,
   createPR,
   clone,
   GITHUB_REGEX,

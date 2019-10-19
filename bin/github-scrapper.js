@@ -7,7 +7,6 @@ async function scrapeEverything() {
 
   console.log(repos);
 
-
   repos = repos.slice(0, 1);
 
   let allRepos = [];
@@ -79,7 +78,9 @@ async function getDataFromUrl(url) {
   let data = [];
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      auth: process.env.GITHUB_TOKEN,
+    });
     const json = await response.json();
 
     data = json || [];
@@ -99,7 +100,9 @@ async function getLicense(gitUrl) {
   let licenseText;
 
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      auth: process.env.GITHUB_TOKEN,
+    });
 
     licenseText = await response.text();
   } catch (e) {
@@ -127,20 +130,12 @@ function ownerRepoFromUrl(gitUrl) {
     return {};
   }
 
-  const [_match, owner, repo] = matches;
+  const [_match, owner, repo] = matches; // eslint-disable-line
 
-  const key = `${owner}/${repo}`
+  const key = `${owner}/${repo}`;
 
   return { key, owner, repo };
 }
-
-async function main() {
-  const dude = await scrapeEverything();
-
-  console.log(dude);
-}
-
-main();
 
 module.exports = {
   scrapeEverything,

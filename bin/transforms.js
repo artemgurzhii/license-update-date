@@ -5,8 +5,6 @@ const codemodCli = require('codemod-cli');
 
 async function runCodemods({ cwd }) {
   await codemodCli.runTransform(__dirname, 'license-date-update', path.join(cwd, 'LICENSE'));
-  await codemodCli.runTransform(__dirname, 'license-date-update', path.join(cwd, 'License'));
-  await codemodCli.runTransform(__dirname, 'license-date-update', path.join(cwd, 'license'));
 }
 
 module.exports = {

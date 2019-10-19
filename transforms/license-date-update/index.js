@@ -1,7 +1,9 @@
-function transformer(file, api) {
+function transformer(file) {
+  const date = new Date();
+  const year = date.getFullYear();
   let { source } = file;
 
-  source = source.replace(/20\d\d/g, '2019');
+  source = source.replace(/20\d\d/g, year);
 
   return source;
 }
