@@ -3,7 +3,12 @@ const { GITHUB_REGEX } = require('./git');
 const { progressFile, writeProgressFile } = require('./cache');
 
 async function scrapeEverything() {
-  const repos = await getRepositories();
+  let repos = await getRepositories();
+
+  console.log(repos);
+
+
+  repos = repos.slice(0, 1);
 
   let allRepos = [];
 

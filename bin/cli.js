@@ -16,6 +16,8 @@ const {
 } = require('./git');
 
 async function updateLicenseDate() {
+  console.log('updateLicenseDate called');
+
   const progress = progressFile();
   const repos = Object.keys(progress);
 
@@ -23,7 +25,7 @@ async function updateLicenseDate() {
     const key = repos[i];
     const info = progress[key];
 
-    if (info.prCreated) {
+    if (info && info.prCreated) {
       console.log(`${key} already has a PR created.`);
       continue;
     }
@@ -42,6 +44,8 @@ async function updateLicenseDate() {
 }
 
 async function updateLicense(theirs, updateState) {
+  console.log('updateLicense also called');
+
   let userName = await getUserName();
   let { repo } = theirs;
   let mine = { owner: userName, repo };
