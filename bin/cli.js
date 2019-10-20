@@ -8,7 +8,7 @@ import { progressFile, writeProgressFile } from './cache';
 import { runCodemods } from './transforms';
 import { getUserName, fork, clone, pushBranch, createPR, checkoutBranch } from './git';
 
-// Logger.useDefaults();
+Logger.useDefaults();
 // Logger.setLevel(Logger.OFF);
 
 async function updateLicenseDate() {

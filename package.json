@@ -12,7 +12,7 @@
   "homepage": "https://github.com/artemgurzhii/license-update-date",
   "scripts": {
     "clean": "rm -rf dist tmp coverage* yarn-error.log .eslintcache",
-    "build": "nodemon --exec babel-node bin/cli.js",
+    "build": "babel-node bin/cli.js",
     "start": "node dist/cli.js",
     "lint": "eslint --cache bin/**"
   },
