@@ -6,15 +6,15 @@
     "email": "artem.gurzhii@gmail.com",
     "url": "https://github.com/artemgurzhii"
   },
-  "description": "Telegram bot, which will notify you each time, when your travis ci build is done",
-  "main": "index.js",
+  "license": "MIT",
+  "description": "Automatically update license date if outdated in public github repositories",
+  "main": "bin/cli.js",
   "homepage": "https://github.com/artemgurzhii/license-update-date",
   "scripts": {
-    "lint": "eslint --cache .",
-    "test": "codemod-cli test",
-    "test:coverage": "codemod-cli test --coverage",
-    "update-docs": "codemod-cli update-docs",
-    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
+    "clean": "rm -rf dist tmp coverage* yarn-error.log .eslintcache",
+    "build": "nodemon --exec babel-node bin/cli.js",
+    "start": "node dist/cli.js",
+    "lint": "eslint --cache bin/**"
   },
   "bin": "./bin/cli.js",
   "keywords": [
@@ -23,24 +23,29 @@
   "dependencies": {
     "@octokit/rest": "^16.30.1",
     "codemod-cli": "^2.1.0",
-    "execa": "^2.0.4",
-    "github-pull-requests": "^0.4.3",
+    "dotenv": "^8.2.0",
+    "execa": "^3.2.0",
     "node-fetch": "^2.6.0",
     "tmp": "^0.1.0"
   },
   "devDependencies": {
-    "coveralls": "^3.0.6",
-    "eslint": "^6.4.0",
+    "@babel/cli": "^7.6.4",
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.1.1",
-    "jest": "^24.9.0",
+    "js-logger": "^1.6.0",
+    "nodemon": "^1.19.4",
     "prettier": "^1.18.2"
   },
   "engines": {
-    "node": "8.* || 10.* || >= 12"
-  },
-  "jest": {
-    "testEnvironment": "node"
+    "node": "10.* || >= 12",
+    "yarn": ">= 1.17.3"
   }
 }
