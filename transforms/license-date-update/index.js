@@ -1,4 +1,4 @@
-function transformer(file) {
+export default function transformer(file) {
   const date = new Date();
   const year = date.getFullYear();
   let { source } = file;
@@ -7,5 +7,3 @@ function transformer(file) {
 
   return source;
 }
-
-module.exports = transformer;

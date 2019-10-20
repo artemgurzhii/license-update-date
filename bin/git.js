@@ -30,14 +30,6 @@ export async function checkoutBranch({ cwd }) {
   }
 
   await run(`git checkout ${PR_BRANCH_NAME}`, { cwd });
-
-  Logger.info('fetching remote changes...');
-
-  try {
-    await run(`git pull origin ${PR_BRANCH_NAME}`, { cwd });
-  } catch (e) {
-    // branch does not exist
-  }
 }
 
 export async function pushBranch({ cwd, updateState }) {

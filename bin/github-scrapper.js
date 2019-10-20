@@ -4,7 +4,6 @@ import { progressFile, writeProgressFile } from './cache';
 
 export async function scrapeEverything() {
   const repos = await getRepositories();
-
   let allRepos = [];
 
   for (let i = 0; i < repos.length; i++) {

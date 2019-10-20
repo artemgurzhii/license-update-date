@@ -14,7 +14,7 @@
     "clean": "rm -rf dist tmp coverage* yarn-error.log .eslintcache",
     "build": "babel-node bin/cli.js",
     "start": "node dist/cli.js",
-    "lint": "eslint --cache bin/**"
+    "lint": "eslint --cache bin/** transforms/**"
   },
   "bin": "./bin/cli.js",
   "keywords": [
