@@ -1,38 +1,38 @@
-const fetch = require('node-fetch');
-const { GITHUB_REGEX } = require('./git');
-const { progressFile, writeProgressFile } = require('./cache');
+import fetch from 'node-fetch';
+import Logger from 'js-logger';
+import { progressFile, writeProgressFile } from './cache';
 
-async function scrapeEverything() {
-  let repos = await getRepositories();
-
-  console.log(repos);
-
-  repos = repos.slice(0, 1);
+export async function scrapeEverything() {
+  const repos = await getRepositories();
 
   let allRepos = [];
 
   for (let i = 0; i < repos.length; i++) {
     const { url, name } = repos[i];
-    console.log(`Getting Repos from ${name}`);
+    Logger.info(`Getting Repos from ${name}`);
 
     const repoLicense = await getLicenseForRepo({ url });
 
     allRepos = allRepos.concat(repoLicense);
   }
 
-  console.log(`There are ${allRepos.length} repos`);
+  Logger.info(`There are ${allRepos.length} repos`);
 
   await filterAndWriteToCache(allRepos);
 
   const reposNeedingPr = progressFile();
 
-  console.log(`There are ${Object.keys(reposNeedingPr).length} repos with outdated LICENSE`);
+  Logger.info(`There are ${Object.keys(reposNeedingPr).length} repos with outdated LICENSE`);
 
   return reposNeedingPr;
 }
 
+function getRandNumber() {
+  return Math.floor(Math.random() * 100000000) + 1;
+}
+
 async function getRepositories() {
-  const url = `https://api.github.com/repositories?since=364`;
+  const url = `https://api.github.com/repositories?since=${getRandNumber()}`;
 
   return getDataFromUrl(url);
 }
@@ -85,15 +85,13 @@ async function getDataFromUrl(url) {
 
     data = json || [];
   } catch (e) {
-    console.log(e);
+    Logger.info(e);
   }
 
   return data;
 }
 
 async function getLicense(gitUrl) {
-  console.log('called');
-
   const rawUrl = gitUrl.replace(`://github`, `://raw.githubusercontent`);
   const url = `${rawUrl}/master/license`;
 
@@ -106,7 +104,7 @@ async function getLicense(gitUrl) {
 
     licenseText = await response.text();
   } catch (e) {
-    console.error(e);
+    Logger.error(e);
     return '';
   }
 
@@ -123,20 +121,10 @@ function isDateOutdated(license) {
 }
 
 function ownerRepoFromUrl(gitUrl) {
-  const matches = gitUrl.match(GITHUB_REGEX);
-
-  if (!matches) {
-    console.log('no matches for url:', gitUrl);
-    return {};
-  }
-
-  const [_match, owner, repo] = matches; // eslint-disable-line
+  const url = gitUrl.replace('https://api.github.com/repos/', '');
+  const [owner, repo] = url.split('/');
 
   const key = `${owner}/${repo}`;
 
   return { key, owner, repo };
 }
-
-module.exports = {
-  scrapeEverything,
-};

@@ -1,7 +1,8 @@
-const execa = require('execa');
+import execa from 'execa';
+import Logger from 'js-logger';
 
-async function run(command, options = {}) {
-  console.log(`Running: ${command}`);
+export async function run(command, options = {}) {
+  Logger.info(`Running: ${command}`);
 
   return await execa(`source $HOME/.bash_profile && ${command}`, {
     stdio: 'inherit',
@@ -12,7 +13,3 @@ async function run(command, options = {}) {
     ...options,
   });
 }
-
-module.exports = {
-  run,
-};

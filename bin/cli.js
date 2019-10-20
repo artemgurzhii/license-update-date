@@ -1,31 +1,26 @@
 #!/usr/bin/env node
 
-const tmp = require('tmp');
-const { scrapeEverything } = require('./github-scrapper');
-const { progressFile, writeProgressFile } = require('./cache');
-const { runCodemods } = require('./transforms');
-const {
-  getUserName,
-  repoExists,
-  fork,
-  clone,
-  pushBranch,
-  createPR,
-  checkoutBranch,
-} = require('./git');
+import 'dotenv/config';
+import Logger from 'js-logger';
+import tmp from 'tmp';
+import { scrapeEverything } from './github-scrapper';
+import { progressFile, writeProgressFile } from './cache';
+import { runCodemods } from './transforms';
+import { getUserName, fork, clone, pushBranch, createPR, checkoutBranch } from './git';
+
+// Logger.useDefaults();
+// Logger.setLevel(Logger.OFF);
 
 async function updateLicenseDate() {
-  console.log('updateLicenseDate called');
-
   const progress = progressFile();
   const repos = Object.keys(progress);
 
-  for (let i = 0; i <= 200; i++) {
-    const key = repos[i];
+  for (const key of repos) {
     const info = progress[key];
+    Logger.info(info);
 
     if (info && info.prCreated) {
-      console.log(`${key} already has a PR created.`);
+      Logger.info(`${key} already has a PR created.`);
       continue;
     }
 
@@ -43,13 +38,10 @@ async function updateLicenseDate() {
 }
 
 async function updateLicense(theirs, updateState) {
-  console.log('updateLicense also called');
+  const userName = await getUserName();
 
-  let userName = await getUserName();
-  let { repo } = theirs;
-  let mine = { owner: userName, repo };
-
-  let { name: tmpPath, removeCallback: cleanTmp } = tmp.dirSync();
+  const { repo } = theirs;
+  const { name: tmpPath, removeCallback: cleanTmp } = tmp.dirSync();
 
   try {
     await fork(theirs);
@@ -68,8 +60,8 @@ async function updateLicense(theirs, updateState) {
       updateState,
     });
   } catch (e) {
-    console.log('sadness');
-    console.error(e);
+    Logger.info('sadness');
+    Logger.error(e);
   } finally {
     cleanTmp();
   }

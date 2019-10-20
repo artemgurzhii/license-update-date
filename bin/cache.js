@@ -1,17 +1,12 @@
-const fs = require('fs');
+import fs from 'fs';
+import { PROGRESS_CACHE_PATH } from './constants.js';
 
-const PATH = 'progress.json';
-
-function progressFile() {
-  const progress = fs.readFileSync(PATH);
+export function progressFile() {
+  const progress = fs.readFileSync(PROGRESS_CACHE_PATH);
 
   return JSON.parse(progress);
 }
 
-function writeProgressFile(json) {
-  fs.writeFileSync(PATH, JSON.stringify(json, null, 2));
+export function writeProgressFile(json) {
+  fs.writeFileSync(PROGRESS_CACHE_PATH, JSON.stringify(json, null, 2));
 }
-module.exports = {
-  progressFile,
-  writeProgressFile,
-};
