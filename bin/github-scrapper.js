@@ -39,8 +39,8 @@ async function getRepositories() {
 
   const data = await getDataFromUrl(url);
 
-  // NOTE: Get only first 30 repositories as github does not allow more with current access key
-  return data.slice(0, 30);
+  // NOTE: Get only first 10 repositories as github does not allow more with current access key
+  return data.slice(0, 10);
 }
 
 async function getLicenseForRepo({ url }) {
@@ -96,7 +96,7 @@ async function getDataFromUrl(url) {
 
 async function getLicense(gitUrl) {
   const rawUrl = gitUrl.replace(`://github`, `://raw.githubusercontent`);
-  const url = `${rawUrl}/master/license`;
+  const url = `${rawUrl}/master/LICENSE`;
 
   let licenseText;
 
