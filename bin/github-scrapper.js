@@ -37,7 +37,10 @@ function getRandNumber() {
 async function getRepositories() {
   const url = `https://api.github.com/repositories?since=${getRandNumber()}`;
 
-  return getDataFromUrl(url);
+  const data = await getDataFromUrl(url);
+
+  // NOTE: Get only first 30 repositories as github does not allow more with current access key
+  return data.slice(0, 30);
 }
 
 async function getLicenseForRepo({ url }) {
