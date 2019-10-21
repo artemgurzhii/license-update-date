@@ -34,7 +34,19 @@ You will need the following things properly installed on your computer.
 
 ## Running Tests
 
-nope:)
+* `yarn test`
+
+## Cron
+
+I run this project as the [cron task](https://www.youtube.com/watch?v=8j0SWYNglcw) on my personal linux server
+
+You can run `crontab -e` in your terminal and add the following code to it
+
+```bash
+*/10 * * * * /{PATH_TO_THE_DIRECTORY}/cron
+```
+
+Following lines of code will run the codemod every 10 minutes(10 minutes is taken so the github will not block your api)
 
 ## License
 ------------------------------------------------------------------------------
