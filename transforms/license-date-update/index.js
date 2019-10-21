@@ -9,7 +9,7 @@ export default function transformer(file) {
   if (source.includes(`${currentYear}`)) return source;
 
   if (source.match(DATE_WITH_DATE_REGEXP)) {
-    source = source.replace(DATE_WITH_DATE_REGEXP, (_str, match1, /* _match2 */) => {
+    source = source.replace(DATE_WITH_DATE_REGEXP, (_str, match1 /*, _match2 */) => {
       return `${match1}-${currentYear}`;
     });
   } else {
