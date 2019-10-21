@@ -95,7 +95,9 @@ async function getDataFromUrl(url) {
 }
 
 async function getLicense(gitUrl) {
-  const rawUrl = gitUrl.replace(`://github`, `://raw.githubusercontent`);
+  const rawUrl = gitUrl
+    .replace('://api.github', '://raw.githubusercontent')
+    .replace('/repos/', '/');
   const url = `${rawUrl}/master/LICENSE`;
 
   let licenseText;
