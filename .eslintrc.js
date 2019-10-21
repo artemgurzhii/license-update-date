@@ -19,5 +19,12 @@ module.exports = {
     'node/no-unpublished-import': 0,
   },
 
-  overrides: [],
+  overrides: [
+    {
+      files: ['__tests__/**/*.js'],
+      env: {
+        jest: true,
+      },
+    },
+  ],
 };

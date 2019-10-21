@@ -14,10 +14,15 @@
     "clean": "rm -rf dist tmp coverage* yarn-error.log .eslintcache",
     "build": "babel-node bin/cli.js",
     "start": "node dist/cli.js",
-    "lint": "eslint --cache bin/** transforms/**"
+    "lint": "eslint --cache bin/** transforms/**",
+    "test": "codemod-cli test",
+    "update-docs": "codemod-cli update-docs"
   },
   "bin": "./bin/cli.js",
   "keywords": [
+    "update license date",
+    "license",
+    "update date",
     "codemod-cli"
   ],
   "dependencies": {
@@ -40,6 +45,7 @@
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.1.1",
+    "jest": "^24.9.0",
     "js-logger": "^1.6.0",
     "nodemon": "^1.19.4",
     "prettier": "^1.18.2"

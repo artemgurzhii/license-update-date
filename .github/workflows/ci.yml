@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - 'v*' # older version branches
     tags:
       - '*'
   pull_request: {}
@@ -27,3 +26,23 @@ jobs:
       run: yarn install
     - name: linting
       run: yarn lint
+
+  test:
+    name: Tests
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node: ['^8.12.0', '10', '12']
+
+    steps:
+    - uses: actions/checkout@v1
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node }}
+    - name: install yarn
+      run: npm install --global yarn
+    - name: install dependencies
+      run: yarn
+    - name: test
+      run: yarn test
