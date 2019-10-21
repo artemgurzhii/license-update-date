@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import Logger from 'js-logger';
-import { DATE_REGEXP } from './constants';
+import { DATE_REGEXP, DATE_WITH_PRESENT_REGEXP, DATE_WITH_DATE_REGEXP } from './constants';
 import { progressFile, writeProgressFile } from './cache';
 
 export async function scrapeEverything() {
@@ -112,14 +112,23 @@ async function getLicense(gitUrl) {
 }
 
 function isDateOutdated(license) {
-  const json = license.toLowerCase();
+  const text = license.toLowerCase();
 
-  if (!json.match(DATE_REGEXP)) return false;
+  if (!text.match(DATE_REGEXP) || text.match(DATE_WITH_PRESENT_REGEXP)) {
+    return false;
+  }
 
   const date = new Date();
-  const year = date.getFullYear();
+  const currentYear = date.getFullYear();
+  const doubleDateMatch = text.match(DATE_WITH_DATE_REGEXP);
 
-  return !json.includes(year);
+  if (doubleDateMatch) {
+    const [, lastYear] = doubleDateMatch[0].split('-');
+
+    return lastYear !== `${currentYear}`;
+  }
+
+  return !text.includes(currentYear);
 }
 
 function ownerRepoFromUrl(gitUrl) {

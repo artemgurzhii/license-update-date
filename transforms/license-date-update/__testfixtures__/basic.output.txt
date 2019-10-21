@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2017-2018 Artem Gurzhii
+Copyright (c) 2017-2019 Artem Gurzhii
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
