@@ -1,5 +1,6 @@
 import fetch from 'node-fetch';
 import Logger from 'js-logger';
+import { DATE_REGEXP } from './constants';
 import { progressFile, writeProgressFile } from './cache';
 
 export async function scrapeEverything() {
@@ -8,11 +9,14 @@ export async function scrapeEverything() {
 
   for (let i = 0; i < repos.length; i++) {
     const { url, name } = repos[i];
-    Logger.info(`Getting Repos from ${name}`);
+
+    Logger.info(`Getting data from the repo: ${name}`);
 
     const repoLicense = await getLicenseForRepo({ url });
 
-    allRepos = allRepos.concat(repoLicense);
+    if (repoLicense.license) {
+      allRepos = allRepos.concat(repoLicense);
+    }
   }
 
   Logger.info(`There are ${allRepos.length} repos`);
@@ -38,14 +42,11 @@ async function getRepositories() {
 
 async function getLicenseForRepo({ url }) {
   const data = await getDataFromUrl(url);
-  const result = [];
 
-  result.push({
+  return {
     gitUrl: url,
     license: data.license,
-  });
-
-  return result;
+  };
 }
 
 async function filterAndWriteToCache(repoList) {
@@ -112,6 +113,8 @@ async function getLicense(gitUrl) {
 
 function isDateOutdated(license) {
   const json = license.toLowerCase();
+
+  if (!json.match(DATE_REGEXP)) return false;
 
   const date = new Date();
   const year = date.getFullYear();
