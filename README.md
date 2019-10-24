@@ -1,4 +1,7 @@
 # License update date
+
+[![Actions Status](https://github.com/artemgurzhii/license-update-date/workflows/CI/badge.svg)](https://github.com/artemgurzhii/license-update-date/actions)
+
 Program to automatically update LICENSE date if is outdated.
 
 **NOTE:** This project was done during the hackaton so there is no big use case for that :)
